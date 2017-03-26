@@ -1,61 +1,65 @@
-import _ from 'lodash';
 import React from 'react';
+import _ from 'lodash';
 import SearchInput from './SearchInput';
 import PersonForm from './Form';
 import Person from './Person';
+import EditPerson from './EditPerson';
+import { connect } from 'react-redux'
+import {addPerson, editPerson, deletePerson} from '../actions/PersonActions.js'
+
+const mapStateToProps = (state) => {
+    return {
+        searchData: state.searchData
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        deletePerson: (personId) => dispatch(deletePerson(personId)),
+        addPerson: (newPerson) => dispatch(addPerson(newPerson)),
+        editPerson: (personId, newPersonData) => dispatch(editPerson(personId, newPersonData))
+    }
+};
 
 class SearchPanel extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            searchData: [{name: 'Mike', birthday: '1993-12-15'},
-                {name: 'Kate', birthday: '1994-12-06'},
-                {name: 'Jery', birthday: '2015-04-01'},
-                {name: 'Mike', birthday: '1998-03-12'}],
             keyword: ''
         }
     }
 
     filterData() {
-        return _.filter(this.state.searchData, (word) => {
+        console.log('filter');
+        return _.filter(this.props.searchData, (word) => {
             return _.includes(word.name, this.state.keyword);
-        })
-    }
-
-    keywordChanged(value) {
-        this.setState({keyword: value});
-    }
-
-    searchDataChanged(person) {
-        this.setState( (prevState) => {
-            const searchData = Array.from(prevState.searchData.concat([person]))
-            return {searchData: searchData}
         });
     }
 
-    deletePerson(index) {
-        this.setState((prevState) => {
-            prevState.searchData.splice(index, 1)
-            return {searchData: Array.from(prevState.searchData)}
-        })
+    searchChanged(keyword) {
+        this.setState({keyword})
     }
-
 
     render() {
-        const data = this.filterData();
-        const result = data.map((value, index) => {
+        const {deletePerson, addPerson, editPerson} = this.props;
+        const filteredData = this.filterData();
+        const result = filteredData.map((value) => {
             return (
-                <Person key={index} value={value} deletePerson={this.deletePerson.bind(this, index)}/>
+                <div key={value.id}>
+                  <Person value={value} deletePerson={() => deletePerson(value.id)}/>
+                  <EditPerson editPerson={(newPersonData) => editPerson(value.id, newPersonData)} person={value}/>
+                </div>
             );
         });
+
         return (
             <div>
-                <SearchInput onChange={this.keywordChanged.bind(this)}/>
+              <SearchInput searchChanged={(keyword) => this.searchChanged(keyword)}/>
                 {result}
-                <PersonForm addPerson={this.searchDataChanged.bind(this)}/>
+              <PersonForm onFormSubmit={(newPerson) => addPerson(newPerson)} buttonName="Add"/>
             </div>
         );
     }
 }
 
-export default SearchPanel;
+export default connect(mapStateToProps, mapDispatchToProps)(SearchPanel);

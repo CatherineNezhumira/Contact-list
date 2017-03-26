@@ -13,8 +13,7 @@ function Person(props) {
 }
 
 Person.propTypes = {
-    value: Person.PropTypes.object,
-    deletePerson: Person.PropTypes.func
+    value: React.PropTypes.object
 }
 
 export default Person;

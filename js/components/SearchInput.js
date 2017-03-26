@@ -1,4 +1,5 @@
 import React from 'react';
+import { createStore } from 'redux'
 
 class SearchInput extends React.Component {
     constructor(props) {
@@ -9,14 +10,14 @@ class SearchInput extends React.Component {
         return (
             <div>
                 <input type="text" defaultValue="" ref={(input) => this.input = input}/>
-                <button onClick={() => this.props.onChange(this.input.value)}>filter</button>
+                <button onClick={() => this.props.searchChanged(this.input.value)}>filter</button>
             </div>
         );
     }
 }
 
 SearchInput.propTypes = {
-    onChange: SearchInput.PropTypes.func
+    searchChanged: React.PropTypes.func
 }
 
 export default SearchInput;

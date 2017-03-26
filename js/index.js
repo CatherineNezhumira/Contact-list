@@ -1,10 +1,21 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import SearchPanel from './components/SearchPanel';
+import { createStore } from 'redux'
+import reducer from './reducers/Person.js'
+import { Provider } from 'react-redux'
+
+let store = createStore(reducer);
+
+store.subscribe(() =>
+    console.log(store.getState())
+);
 
 window.addEventListener('load', () => {
     ReactDOM.render(
-        <SearchPanel/>,
+        <Provider store={store}>
+          <SearchPanel/>
+        </Provider>,
         document.getElementById('root'));
 });
 
