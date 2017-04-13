@@ -13,7 +13,8 @@ function Contact(props) {
 }
 
 Contact.propTypes = {
-    value: React.PropTypes.object
+    value: React.PropTypes.object,
+    deleteContact: React.PropTypes.func
 };
 
 export default Contact;

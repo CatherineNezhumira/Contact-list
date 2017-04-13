@@ -33,6 +33,8 @@ class Form extends React.Component {
 }
 
 Form.propTypes = {
+    contact: React.PropTypes.object,
+    buttonName: React.PropTypes.string,
     onFormSubmit: React.PropTypes.func
 };
 

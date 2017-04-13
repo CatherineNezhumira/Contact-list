@@ -52,7 +52,7 @@ class EditContact extends React.Component {
                     isOpen={this.state.modalIsOpen}
                     onRequestClose={this.closeModal}
                     style={customStyles}
-                    contentLabel="Edit contactn">
+                    contentLabel="Edit contact">
 
                     <div>
                         <h2 ref="subtitle" style={customStyles.title}>Edit contact</h2>
@@ -75,5 +75,10 @@ class EditContact extends React.Component {
     }
 }
 
+
+Form.propTypes = {
+    contact: React.PropTypes.object,
+    editContact: React.PropTypes.func
+};
 
 export default EditContact;

@@ -4,20 +4,22 @@ import SearchInput from './SearchInput';
 import ContactForm from './Form';
 import Person from './Person';
 import EditContact from './EditContact';
+import ErrorModalDialog from './ErrorModalDialog'
 import { connect } from 'react-redux'
-import {addContact, editContact, deleteContact, requestContacts} from '../actions/ContactActions.js'
+import {addContactRequest, editContactRequest, deleteContactRequest, requestContacts} from '../actions/ContactActions.js'
 
 const mapStateToProps = (state) => {
     return {
-        searchData: state.searchData
+        searchData: state.searchData,
+        errorMessage: state.errorMessage
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        deleteContact: (contactId) => dispatch(deleteContact(contactId)),
-        addContact: (newContact) => dispatch(addContact(newContact)),
-        editContact: (newContactData) => dispatch(editContact(newContactData)),
+        deleteContact: (contactId) => dispatch(deleteContactRequest(contactId)),
+        addContact: (newContact) => dispatch(addContactRequest(newContact)),
+        editContact: (newContactData) => dispatch(editContactRequest(newContactData)),
         requestContacts: () => dispatch(requestContacts())
     }
 };
@@ -58,6 +60,7 @@ class SearchPanel extends React.Component {
 
         return (
             <div>
+              <ErrorModalDialog/>
               <SearchInput searchChanged={(keyword) => this.searchChanged(keyword)}/>
                 {result}
               <ContactForm onFormSubmit={(newContact) => addContact(newContact)} buttonName="Add"/>
@@ -65,5 +68,10 @@ class SearchPanel extends React.Component {
         );
     }
 }
+
+SearchPanel.propTypes = {
+    searchData: React.PropTypes.array,
+    requestContacts: React.PropTypes.func
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPanel);

@@ -1,19 +1,19 @@
-import {requestContacts, receiveContacts} from '../actions/ContactActions'
-import {REQUEST_CONTACTS, ADD_CONTACT, DELETE_CONTACT, EDIT_CONTACT} from '../constants/ActionNames'
+import {addContact, editContact, deleteContact, requestContacts, receiveContacts, receiveError} from '../actions/ContactActions'
+import {REQUEST_CONTACTS, REQUEST_ADD_CONTACT, REQUEST_EDIT_CONTACT, REQUEST_DELETE_CONTACT} from '../constants/ActionNames'
 
 const contactMiddleware = store => next => action => {
     switch (action.type) {
         case REQUEST_CONTACTS:
             getContacts(store.dispatch);
             break;
-        case ADD_CONTACT:
+        case REQUEST_ADD_CONTACT:
             addNewContact(store.dispatch, action.contact);
             break;
-        case DELETE_CONTACT:
-            deleteContact(store.dispatch, action.contactId);
+        case REQUEST_DELETE_CONTACT:
+            deleteContactById(store.dispatch, action.contactId);
             break;
-        case EDIT_CONTACT:
-            editContact(store.dispatch, action.newContactData);
+        case REQUEST_EDIT_CONTACT:
+            editContactData(store.dispatch, action.newContactData);
             break;
     }
 
@@ -30,7 +30,13 @@ function addNewContact(dispatch, newContact) {
                     "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
                 }
             })
-            .then(dispatch(requestContacts()));
+            .then(response => {
+                response.json().then(id => {
+                    newContact.id = id;
+                    dispatch(addContact(newContact))
+                })
+            })
+            .catch(err => dispatch(receiveError(err)));
 }
 
 function getContacts(dispatch) {
@@ -43,11 +49,11 @@ function getContacts(dispatch) {
                 response.json().then(result => dispatch(receiveContacts(result)));
             }
         )
-        .catch(err => console.log('Fetch Error :-S', err));
+        .catch(err => dispatch(receiveError(err)));
 
 }
 
-function deleteContact(dispatch, id) {
+function deleteContactById(dispatch, id) {
     return fetch(`http://localhost:8050/api/contacts/${id}`,
         {
             method: 'delete',
@@ -56,10 +62,12 @@ function deleteContact(dispatch, id) {
                 "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
             }
         })
-        .then(res => dispatch(requestContacts()));
+        // .then(res => dispatch(requestContacts()));
+        .then(res => dispatch(deleteContact(id)))
+        .catch(err => dispatch(receiveError(err)));
 }
 
-function editContact(dispatch, newContactData) {
+function editContactData(dispatch, newContactData) {
     return fetch('http://localhost:8050/api/contacts',
         {
             method: 'put',
@@ -69,7 +77,9 @@ function editContact(dispatch, newContactData) {
                 "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
             }
         })
-        .then(res => dispatch(requestContacts()));
+        // .then(res => dispatch(requestContacts()));
+        .then(res => dispatch(editContact(newContactData)))
+        .catch(err => dispatch(receiveError(err)));
 }
 
 export default contactMiddleware;
