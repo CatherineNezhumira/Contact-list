@@ -8,9 +8,7 @@ import contactMiddleware from './middleware/contactRequests'
 
 const store = createStore(reducer, applyMiddleware(contactMiddleware));
 
-store.subscribe(() =>
-    console.log(store.getState())
-);
+store.subscribe();
 
 window.addEventListener('load', () => {
     ReactDOM.render(

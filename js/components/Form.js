@@ -14,7 +14,6 @@ class Form extends React.Component {
 
     render() {
         const isEditMode = this.props.buttonName === 'Edit';
-        console.log('isEditMode', isEditMode, this.props.contact);
         return (
             <div>
                 <input type="text" defaultValue={isEditMode ? this.props.contact.name : ""}

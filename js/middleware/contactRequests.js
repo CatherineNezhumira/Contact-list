@@ -31,20 +31,12 @@ function addNewContact(dispatch, newContact) {
                 }
             })
             .then(dispatch(requestContacts()));
-        // .then(function (data) {
-        //     console.log('Request succeeded with JSON response', data);
-        // })
-        // .catch(function (error) {
-        //     console.log('Request failed', error);
-        // });
 }
 
 function getContacts(dispatch) {
     return fetch('http://localhost:8050/api/contacts', {mode: 'cors'})
         .then(response => {
                 if (response.status !== 200) {
-                    console.log('Looks like there was a problem. Status Code: ' +
-                        response.status);
                     return;
                 }
 
