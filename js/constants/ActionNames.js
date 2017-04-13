@@ -1,4 +1,6 @@
 
-export const ADD_PERSON = 'addPerson';
-export const EDIT_PERSON = 'editPerson';
-export const DELETE_PERSON = 'deletePerson';
+export const ADD_CONTACT = 'addContact';
+export const EDIT_CONTACT = 'editContact';
+export const DELETE_CONTACT = 'deleteContact';
+export const REQUEST_CONTACTS = "requestContacts";
+export const RECEIVE_CONTACTS = "receiveContacts";

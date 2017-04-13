@@ -23,7 +23,7 @@ const customStyles = {
     }
 };
 
-class EditPerson extends React.Component {
+class EditContact extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -39,8 +39,8 @@ class EditPerson extends React.Component {
         this.setState({modalIsOpen: false});
     }
 
-    editPerson(person) {
-        this.props.editPerson(person);
+    editContact(contact) {
+        this.props.editContact(contact);
         this.closeModal();
     }
 
@@ -52,10 +52,10 @@ class EditPerson extends React.Component {
                     isOpen={this.state.modalIsOpen}
                     onRequestClose={this.closeModal}
                     style={customStyles}
-                    contentLabel="Edit person">
+                    contentLabel="Edit contactn">
 
                     <div>
-                        <h2 ref="subtitle" style={customStyles.title}>Edit person</h2>
+                        <h2 ref="subtitle" style={customStyles.title}>Edit contact</h2>
                         {<button onClick={this.closeModal.bind(this)}>X</button>}
                     </div>
                     <div>
@@ -66,7 +66,7 @@ class EditPerson extends React.Component {
                     <br/>
                     <form>
                         <br/>
-                        <Form onFormSubmit={this.editPerson.bind(this)} buttonName="Edit" person={this.props.person}/>
+                        <Form onFormSubmit={this.editContact.bind(this)} buttonName="Edit" contact={this.props.contact}/>
 
                     </form>
                 </Modal>
@@ -76,4 +76,4 @@ class EditPerson extends React.Component {
 }
 
 
-export default EditPerson;
+export default EditContact;

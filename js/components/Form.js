@@ -8,21 +8,20 @@ class Form extends React.Component {
 
     onSubmit(e) {
         e.preventDefault();
-        this.props.onFormSubmit({name: this.name.value, birthday: this.birthday.value})
+        const contactId = this.props.contact ? this.props.contact.id : undefined;
+        this.props.onFormSubmit({id: contactId, name: this.name.value, birthday: this.birthday.value});
     }
 
     render() {
         const isEditMode = this.props.buttonName === 'Edit';
-        const model = isEditMode ? this.props.person : {name: '', birthday: ''}
-
-        console.log('isEditMode', isEditMode, this.props.person);
+        console.log('isEditMode', isEditMode, this.props.contact);
         return (
             <div>
-                <input type="text" defaultValue={isEditMode ? this.props.person.name : ""}
+                <input type="text" defaultValue={isEditMode ? this.props.contact.name : ""}
                        ref={(name) => {
                            this.name = name
                        }}/>
-                <input type="text" defaultValue={isEditMode ? this.props.person.birthday : ""}
+                <input type="text" defaultValue={isEditMode ? this.props.contact.birthday : ""}
                        ref={(birthday) => {
                            this.birthday = birthday
                        }}/>
@@ -36,6 +35,6 @@ class Form extends React.Component {
 
 Form.propTypes = {
     onFormSubmit: React.PropTypes.func
-}
+};
 
 export default Form;

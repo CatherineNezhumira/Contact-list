@@ -18,6 +18,6 @@ class SearchInput extends React.Component {
 
 SearchInput.propTypes = {
     searchChanged: React.PropTypes.func
-}
+};
 
 export default SearchInput;

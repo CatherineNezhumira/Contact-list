@@ -1,19 +1,19 @@
 import React from 'react';
 
-function Person(props) {
+function Contact(props) {
     return (
         <div>
             <div>
                 <h1>{`${props.value.name}`}</h1>
                 <h4>{`${props.value.birthday}`}</h4>
             </div>
-            <button onClick={props.deletePerson}>delete</button>
+            <button onClick={props.deleteContact}>delete</button>
         </div>
     );
 }
 
-Person.propTypes = {
+Contact.propTypes = {
     value: React.PropTypes.object
-}
+};
 
-export default Person;
+export default Contact;
