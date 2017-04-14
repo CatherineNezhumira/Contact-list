@@ -1,4 +1,5 @@
-import {addContact, editContact, deleteContact, requestContacts, receiveContacts, receiveError} from '../actions/ContactActions'
+import {addContact, editContact, deleteContact, requestContacts, receiveContacts} from '../actions/ContactActions'
+import {receiveError} from '../actions/ErrorActions'
 import {REQUEST_CONTACTS, REQUEST_ADD_CONTACT, REQUEST_EDIT_CONTACT, REQUEST_DELETE_CONTACT} from '../constants/ActionNames'
 
 const contactMiddleware = store => next => action => {
@@ -31,6 +32,10 @@ function addNewContact(dispatch, newContact) {
                 }
             })
             .then(response => {
+                if (response.status !== 201) {
+                    dispatch(receiveError(`Server error: ${response.status}`));
+                    return;
+                }
                 response.json().then(id => {
                     newContact.id = id;
                     dispatch(addContact(newContact))
@@ -43,6 +48,7 @@ function getContacts(dispatch) {
     return fetch('http://localhost:8050/api/contacts', {mode: 'cors'})
         .then(response => {
                 if (response.status !== 200) {
+                    dispatch(receiveError(`Server error: ${response.status}`));
                     return;
                 }
 
@@ -63,7 +69,13 @@ function deleteContactById(dispatch, id) {
             }
         })
         // .then(res => dispatch(requestContacts()));
-        .then(res => dispatch(deleteContact(id)))
+        .then(res => {
+            if (res.status !== 200) {
+                dispatch(receiveError(`Server error: ${res.status}`));
+                return;
+            }
+            dispatch(deleteContact(id));
+        })
         .catch(err => dispatch(receiveError(err)));
 }
 
@@ -78,7 +90,13 @@ function editContactData(dispatch, newContactData) {
             }
         })
         // .then(res => dispatch(requestContacts()));
-        .then(res => dispatch(editContact(newContactData)))
+        .then(res => {
+            if (res.status !== 200) {
+                dispatch(receiveError(`Server error: ${res.status}`));
+                return;
+            }
+            dispatch(editContact(newContactData))
+        })
         .catch(err => dispatch(receiveError(err)));
 }
 

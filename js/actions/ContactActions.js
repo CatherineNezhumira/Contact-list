@@ -1,6 +1,6 @@
 import {ADD_CONTACT, EDIT_CONTACT, DELETE_CONTACT,
     REQUEST_ADD_CONTACT, REQUEST_EDIT_CONTACT, REQUEST_DELETE_CONTACT,
-    REQUEST_CONTACTS, RECEIVE_CONTACTS, RECEIVE_ERROR, CLEAR_MESSAGE} from '../constants/ActionNames.js'
+    REQUEST_CONTACTS, RECEIVE_CONTACTS} from '../constants/ActionNames.js'
 
 export function addContact(contact) {
     return {type: ADD_CONTACT, contact};
@@ -32,12 +32,4 @@ export function requestContacts() {
 
 export function receiveContacts(json) {
     return {type: RECEIVE_CONTACTS, contacts: json};
-}
-
-export function receiveError(error) {
-    return {type: RECEIVE_ERROR, error};
-}
-
-export function clearErrorMessage() {
-    return {type: CLEAR_MESSAGE};
 }

@@ -1,7 +1,28 @@
 import React from 'react';
 import Modal from 'react-modal';
-import {clearErrorMessage} from '../actions/ContactActions.js'
+import {clearErrorMessage} from '../actions/ErrorActions'
 import { connect } from 'react-redux'
+
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)'
+    },
+    title: {
+        marginTop: '0%',
+        width: '65%',
+        marginRight: '15%',
+        float: 'left',
+        marginBottom: '0%'
+    },
+    label: {
+        marginLeft: '35%'
+    }
+};
 
 const mapStateToProps = (state) => {
     return {
@@ -54,27 +75,5 @@ ErrorModalDialog.propTypes = {
     errorMessage: React.PropTypes.string,
     clearMessage: React.PropTypes.func
 };
-
-const customStyles = {
-    content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)'
-    },
-    title: {
-        marginTop: '0%',
-        width: '65%',
-        marginRight: '15%',
-        float: 'left',
-        marginBottom: '0%'
-    },
-    label: {
-        marginLeft: '35%'
-    }
-};
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(ErrorModalDialog);
