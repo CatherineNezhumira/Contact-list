@@ -1,4 +1,4 @@
-import {RECEIVE_ERROR, CLEAR_MESSAGE} from '../constants/ActionNames.js'
+import {RECEIVE_ERROR, CLEAR_MESSAGE} from './ActionTypes.js'
 
 export function receiveError(error) {
     return {type: RECEIVE_ERROR, error};

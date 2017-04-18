@@ -4,6 +4,7 @@ import {createStore} from 'redux'
 class Form extends React.Component {
     constructor(props) {
         super(props);
+        this.submitForm = this.onSubmit.bind(this);
     }
 
     onSubmit(e) {
@@ -13,18 +14,18 @@ class Form extends React.Component {
     }
 
     render() {
-        const isEditMode = this.props.buttonName === 'Edit';
+        console.log(this.props.isEditMode, this.props.contact);
         return (
             <div>
-                <input type="text" defaultValue={isEditMode ? this.props.contact.name : ""}
+                <input type="text" defaultValue={this.props.isEditMode ? this.props.contact.name : ""}
                        ref={(name) => {
                            this.name = name
                        }}/>
-                <input type="text" defaultValue={isEditMode ? this.props.contact.birthday : ""}
+                <input type="text" defaultValue={this.props.isEditMode ? this.props.contact.birthday : ""}
                        ref={(birthday) => {
                            this.birthday = birthday
                        }}/>
-                <button onClick={this.onSubmit.bind(this)}>
+                <button onClick={this.submitForm}>
                     {this.props.buttonName}
                 </button>
             </div>
@@ -35,7 +36,8 @@ class Form extends React.Component {
 Form.propTypes = {
     contact: React.PropTypes.object,
     buttonName: React.PropTypes.string,
-    onFormSubmit: React.PropTypes.func
+    onFormSubmit: React.PropTypes.func,
+    isEditMode: React.PropTypes.bool
 };
 
 export default Form;

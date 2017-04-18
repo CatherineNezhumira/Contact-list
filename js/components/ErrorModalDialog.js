@@ -30,15 +30,14 @@ const mapStateToProps = (state) => {
     }
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        clearMessage: () => dispatch(clearErrorMessage())
-    }
+const mapDispatchToProps = {
+        clearMessage: clearErrorMessage
 };
 
 class ErrorModalDialog extends React.Component {
     constructor(props) {
         super(props);
+        this.closeModal = this.closeModal.bind(this);
     }
 
     closeModal() {
@@ -47,7 +46,7 @@ class ErrorModalDialog extends React.Component {
     }
 
     render() {
-        const {clearMessage} = this.props;
+       // const {clearMessage} = this.props;
         return (
             <div>
                 <Modal
@@ -58,7 +57,7 @@ class ErrorModalDialog extends React.Component {
 
                     <div>
                         <h2 ref="subtitle" style={customStyles.title}>Error :(</h2>
-                        {<button onClick={this.closeModal.bind(this)}>X</button>}
+                        {<button onClick={this.closeModal}>X</button>}
                     </div>
                     <div>
                         <br/>

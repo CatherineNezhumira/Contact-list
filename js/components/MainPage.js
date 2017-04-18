@@ -17,19 +17,23 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        deleteContact: (contactId) => dispatch(deleteContactRequest(contactId)),
-        addContact: (newContact) => dispatch(addContactRequest(newContact)),
+        deleteContact: (contactId) =>  {console.log('delete id', contactId); dispatch(deleteContactRequest(contactId))},
+        addContact: (newContact) => {console.log('new contact', newContact);  dispatch(addContactRequest(newContact))},
         editContact: (newContactData) => dispatch(editContactRequest(newContactData)),
         requestContacts: () => dispatch(requestContacts())
     }
 };
 
-class SearchPanel extends React.Component {
+class MainPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             keyword: ''
-        }
+        };
+        const {deleteContact, addContact, editContact} = this.props;
+        this.edit = (newContactData) => editContact(newContactData);
+        this.add = (newContact) => addContact(newContact);
+        this.delete = (id) => deleteContact(id);
     }
 
     filterData() {
@@ -47,31 +51,32 @@ class SearchPanel extends React.Component {
     }
 
     render() {
-        const {deleteContact, addContact, editContact} = this.props;
+
         const filteredData = this.filterData();
+        console.log('filteredData', filteredData);
         const result = filteredData.map((value) => {
             return (
                 <div key={value.id}>
-                  <Person value={value} deleteContact={() => deleteContact(value.id)}/>
-                  <EditContact editContact={(newContactData) => editContact(newContactData)} contact={value}/>
+                  <Person value={value} deleteContact={() => this.delete(value.id)}/>
+                  <EditContact editContact={this.edit} contact={value}/>
                 </div>
             );
         });
-
+console.log('filteredData', filteredData);
         return (
             <div>
               <ErrorModalDialog/>
               <SearchInput searchChanged={(keyword) => this.searchChanged(keyword)}/>
                 {result}
-              <ContactForm onFormSubmit={(newContact) => addContact(newContact)} buttonName="Add"/>
+              <ContactForm onFormSubmit={this.add} buttonName="Add" isEditMode={false}/>
             </div>
         );
     }
 }
 
-SearchPanel.propTypes = {
+MainPage.propTypes = {
     searchData: React.PropTypes.array,
     requestContacts: React.PropTypes.func
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchPanel);
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

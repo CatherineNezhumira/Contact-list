@@ -1,6 +1,6 @@
 import {addContact, editContact, deleteContact, requestContacts, receiveContacts} from '../actions/ContactActions'
 import {receiveError} from '../actions/ErrorActions'
-import {REQUEST_CONTACTS, REQUEST_ADD_CONTACT, REQUEST_EDIT_CONTACT, REQUEST_DELETE_CONTACT} from '../constants/ActionNames'
+import {REQUEST_CONTACTS, REQUEST_ADD_CONTACT, REQUEST_EDIT_CONTACT, REQUEST_DELETE_CONTACT} from '../actions/ActionTypes'
 
 const contactMiddleware = store => next => action => {
     switch (action.type) {
@@ -20,9 +20,10 @@ const contactMiddleware = store => next => action => {
 
     next(action);
 };
+const contactUrl = 'http://localhost:8050/api/contacts';
 
 function addNewContact(dispatch, newContact) {
-        return fetch('http://localhost:8050/api/contacts',
+        return fetch(contactUrl,
             {
                 method: 'post',
                 body: JSON.stringify(newContact),
@@ -45,7 +46,7 @@ function addNewContact(dispatch, newContact) {
 }
 
 function getContacts(dispatch) {
-    return fetch('http://localhost:8050/api/contacts', {mode: 'cors'})
+    return fetch(contactUrl, {mode: 'cors'})
         .then(response => {
                 if (response.status !== 200) {
                     dispatch(receiveError(`Server error: ${response.status}`));
@@ -60,7 +61,8 @@ function getContacts(dispatch) {
 }
 
 function deleteContactById(dispatch, id) {
-    return fetch(`http://localhost:8050/api/contacts/${id}`,
+    console.log('delete', id);
+    return fetch(`${contactUrl}/${id}`,
         {
             method: 'delete',
             mode: 'cors',
@@ -80,7 +82,7 @@ function deleteContactById(dispatch, id) {
 }
 
 function editContactData(dispatch, newContactData) {
-    return fetch('http://localhost:8050/api/contacts',
+    return fetch(contactUrl,
         {
             method: 'put',
             body: JSON.stringify(newContactData),

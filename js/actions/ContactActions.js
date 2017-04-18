@@ -1,6 +1,6 @@
 import {ADD_CONTACT, EDIT_CONTACT, DELETE_CONTACT,
     REQUEST_ADD_CONTACT, REQUEST_EDIT_CONTACT, REQUEST_DELETE_CONTACT,
-    REQUEST_CONTACTS, RECEIVE_CONTACTS} from '../constants/ActionNames.js'
+    REQUEST_CONTACTS, RECEIVE_CONTACTS} from './ActionTypes.js'
 
 export function addContact(contact) {
     return {type: ADD_CONTACT, contact};

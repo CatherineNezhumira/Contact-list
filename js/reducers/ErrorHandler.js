@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux'
-import {RECEIVE_ERROR, CLEAR_MESSAGE} from '../constants/ActionNames.js'
+import {RECEIVE_ERROR, CLEAR_MESSAGE} from '../actions/ActionTypes.js'
 
 const initialState = {
     errorMessage: ''

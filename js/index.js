@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
-import SearchPanel from './components/SearchPanel';
+import MainPage from './components/MainPage';
 import { createStore, applyMiddleware } from 'redux'
-import reducer from './reducers/Contact.js'
+import reducer from './reducers/index'
 import { Provider } from 'react-redux'
 import contactMiddleware from './middleware/contactRequests'
 
@@ -15,7 +15,7 @@ store.subscribe(() =>
 window.addEventListener('load', () => {
     ReactDOM.render(
         <Provider store={store}>
-          <SearchPanel/>
+          <MainPage/>
         </Provider>,
         document.getElementById('root'));
 });

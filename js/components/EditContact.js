@@ -29,6 +29,9 @@ class EditContact extends React.Component {
         this.state = {
             modalIsOpen: false
         };
+        this.openModalWindow = this.openModal.bind(this);
+        this.closeModalWindow = this.closeModal.bind(this);
+        this.submitForm = this.editContact.bind(this);
     }
 
     openModal() {
@@ -47,7 +50,7 @@ class EditContact extends React.Component {
     render() {
         return (
             <div>
-                <button onClick={this.openModal.bind(this)}>edit</button>
+                <button onClick={this.openModalWindow}>edit</button>
                 <Modal
                     isOpen={this.state.modalIsOpen}
                     onRequestClose={this.closeModal}
@@ -56,7 +59,7 @@ class EditContact extends React.Component {
 
                     <div>
                         <h2 ref="subtitle" style={customStyles.title}>Edit contact</h2>
-                        {<button onClick={this.closeModal.bind(this)}>X</button>}
+                        {<button onClick={this.closeModalWindow}>X</button>}
                     </div>
                     <div>
                         <br/>
@@ -66,7 +69,7 @@ class EditContact extends React.Component {
                     <br/>
                     <form>
                         <br/>
-                        <Form onFormSubmit={this.editContact.bind(this)} buttonName="Edit" contact={this.props.contact}/>
+                        <Form onFormSubmit={this.submitForm} buttonName="Edit" contact={this.props.contact} isEditMode={true}/>
 
                     </form>
                 </Modal>
